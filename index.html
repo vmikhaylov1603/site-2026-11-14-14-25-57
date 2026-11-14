@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Анна Смирнова — Диджитал-маркетолог</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0f0f1a;
+      --card: #1a1a2e;
+      --accent: #ff6b35;
+      --accent2: #7b2ff7;
+      --text: #f0f0f5;
+      --muted: #9a9ab0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.25;
+      z-index: 0;
+      pointer-events: none;
+    }
+    body::before { background: var(--accent2); top: -150px; left: -150px; }
+    body::after { background: var(--accent); bottom: -150px; right: -150px; }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 40px 0 60px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+    .hero.visible { opacity: 1; transform: translateY(0); }
+
+    .avatar {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.2rem;
+      font-weight: 700;
+      box-shadow: 0 0 40px rgba(123, 47, 247, 0.5);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #fff, var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .role {
+      font-size: 1.15rem;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    .tagline {
+      margin: 24px auto 0;
+      max-width: 620px;
+      color: var(--text);
+      opacity: 0.85;
+    }
+
+    .section {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.7s ease;
+    }
+    .section.visible { opacity: 1; transform: translateY(0); }
+
+    .section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section h2 span.dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .channels {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .channel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 24px;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .channel:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 30px rgba(255,107,53,0.2);
+    }
+
+    .channel .icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .channel h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+    .channel p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .skill {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,107,53,0.15), rgba(123,47,247,0.15));
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+      transition: transform 0.2s;
+    }
+    .skill:hover { transform: scale(1.06); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .contact {
+      text-align: center;
+    }
+    .contact p {
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 6px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(123,47,247,0.4);
+    }
+    .btn.outline {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      .section { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="hero" id="hero">
+      <div class="avatar">АС</div>
+      <h1>Анна Смирнова</h1>
+      <div class="role">Диджитал-маркетолог</div>
+      <p class="tagline">
+        Помогаю бизнесу находить клиентов и зарабатывать на продвижении через маркетплейсы и контентные площадки.
+        Специализируюсь на каналах Дубалькис и Авито.
+      </p>
+    </header>
+
+    <section class="section">
+      <h2><span class="dot"></span>Направления работы</h2>
+      <div class="channels">
+        <div class="channel">
+          <div class="icon">🎯</div>
+          <h3>Дубалькис</h3>
+          <p>Настройка и ведение рекламных кампаний, работа с аудиторией, аналитика и оптимизация конверсии.</p>
+        </div>
+        <div class="channel">
+          <div class="icon">🛒</div>
+          <h3>Авито</h3>
+          <p>Продвижение объявлений, оптимизация карточек товаров и услуг, платное продвижение и рост откликов.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2><span class="dot"></span>Результаты</h2>
+      <div class="stats">
+        <div>
+          <div class="stat-num">50+</div>
+          <div class="stat-label">запущенных кампаний</div>
+        </div>
+        <div>
+          <div class="stat-num">3×</div>
+          <div class="stat-label">средний рост заявок</div>
+        </div>
+        <div>
+          <div class="stat-num">5 лет</div>
+          <div class="stat-label">в digital-маркетинге</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2><span class="dot"></span>Навыки</h2>
+      <div class="skills">
+        <span class="skill">Таргетированная реклама</span>
+        <span class="skill">Аналитика и отчётность</span>
+        <span class="skill">Юнит-экономика</span>
+        <span class="skill">Копирайтинг объявлений</span>
+        <span class="skill">A/B-тестирование</span>
+        <span class="skill">Работа с бюджетами</span>
+      </div>
+    </section>
+
+    <section class="section contact">
+      <h2 style="justify-content:center;"><span class="dot"></span>Связаться</h2>
+      <p>Готова обсудить ваш проект и предложить стратегию продвижения</p>
+      <a class="btn" href="mailto:hello@example.com">Написать на почту</a>
+      <a class="btn outline" href="https://t.me/example">Telegram</a>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Анна Смирнова. Все права защищены.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.section').forEach(el => observer.observe(el));
+
+    window.addEventListener('load', () => {
+      document.getElementById('hero').classList.add('visible');
+    });
+  </script>
+</body>
+</html>
